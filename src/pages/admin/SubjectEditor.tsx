@@ -142,19 +142,19 @@ const ResourcesTable: React.FC<{
               Name 
             </th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Class PPT
+            </th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Exercise
             </th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Solution
             </th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Video
+              Class Video
             </th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Article
-            </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Class PPT
+              Test
             </th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Actions
@@ -165,6 +165,38 @@ const ResourcesTable: React.FC<{
           {subtopicResources.map((resource, index) => (
             <tr key={index}>
               <td className="px-6 py-4 whitespace-nowrap">{resource.articleTitle || '-'}</td>
+              <td className="px-6 py-4 whitespace-nowrap">
+                {resource.classPptFile ? (
+                  <button
+                    onClick={() => {
+                      const newWindow = window.open('', '_blank');
+                      if (newWindow) {
+                        newWindow.document.write(`
+                          <html>
+                            <head>
+                              <title>${resource.classPptTitle || 'Class PPT'}</title>
+                            </head>
+                            <body style="margin:0;padding:0;">
+                              <embed 
+                                src="${resource.classPptFile}" 
+                                type="application/pdf" 
+                                width="100%" 
+                                height="100%"
+                                style="position:absolute;top:0;left:0;right:0;bottom:0;"
+                              />
+                            </body>
+                          </html>
+                        `);
+                      }
+                    }}
+                    className="text-purple-600 hover:text-purple-800"
+                  >
+                    <FileText className="h-5 w-5 inline" />
+                  </button>
+                ) : (
+                  <span className="text-gray-400">-</span>
+                )}
+              </td>
               <td className="px-6 py-4 whitespace-nowrap">
                 {resource.exercisePdfFile ? (
                   <button
@@ -258,38 +290,6 @@ const ResourcesTable: React.FC<{
                 )}
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
-                {resource.classPptFile ? (
-                  <button
-                    onClick={() => {
-                      const newWindow = window.open('', '_blank');
-                      if (newWindow) {
-                        newWindow.document.write(`
-                          <html>
-                            <head>
-                              <title>${resource.classPptTitle || 'Class PPT'}</title>
-                            </head>
-                            <body style="margin:0;padding:0;">
-                              <embed 
-                                src="${resource.classPptFile}" 
-                                type="application/pdf" 
-                                width="100%" 
-                                height="100%"
-                                style="position:absolute;top:0;left:0;right:0;bottom:0;"
-                              />
-                            </body>
-                          </html>
-                        `);
-                      }
-                    }}
-                    className="text-purple-600 hover:text-purple-800"
-                  >
-                    <FileText className="h-5 w-5 inline" />
-                  </button>
-                ) : (
-                  <span className="text-gray-400">-</span>
-                )}
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">
                 <div className="flex space-x-2">
                   <button
                     onClick={() => onEdit(resource)}
@@ -326,7 +326,7 @@ interface ResourceResponse {
     solutionUrl: string;
     video: string;
     classPPTUrl: string;
-    article: string;
+    test: string;  // Changed from article to test
   };
 }
 
@@ -342,13 +342,12 @@ const fetchResources = async (subjectId: string) => {
       }
     );
 
-    // Transform API response to ResourceTableItem format
     const transformedResources: ResourceTableItem[] = response.data.map((item: ResourceResponse) => ({
       id: item.id,
       subtopicId: subjectId,
       status: true,
       articleTitle: item.name || 'Untitled',
-      articleLink: item.resourceResponseDTO.article || '',
+      articleLink: item.resourceResponseDTO.test || '', // Make sure we're using test field
       videoTitle: '',
       videoLink: item.resourceResponseDTO.video || '',
       exerciseTitle: 'Exercise',
@@ -428,12 +427,12 @@ const createResource = async (subjectId: string, resourceData: Resource) => {
     const formData = new FormData();
     formData.append('name', resourceData.articleTitle || resourceData.videoTitle || "Untitled Resource");
     
-    // Append video and article links
+    // Append video and test links
     if (resourceData.videoLink) {
       formData.append('video', resourceData.videoLink);
     }
     if (resourceData.articleLink) {
-      formData.append('article', resourceData.articleLink);
+      formData.append('test', resourceData.articleLink); // Changed from article to test
     }
 
     // Convert base64 PDFs to File objects and append them
@@ -476,12 +475,12 @@ const updateResource = async (subjectId: string, resourceId: string, updatedData
     const formData = new FormData();
     formData.append('name', updatedData.articleTitle || updatedData.videoTitle || "Untitled Resource");
     
-    // Append video and article links
+    // Append video and test links
     if (updatedData.videoLink) {
       formData.append('video', updatedData.videoLink);
     }
     if (updatedData.articleLink) {
-      formData.append('article', updatedData.articleLink);
+      formData.append('test', updatedData.articleLink); // Changed from article to test
     }
 
     // Convert base64 PDFs to File objects and append them
@@ -1449,6 +1448,29 @@ const SubjectEditor: React.FC = () => {
                     </div>
                   </div>
                 </div> */}
+                {/* Class PPT */}
+                <div className="border rounded-lg p-4">
+                  <h4 className="font-medium text-gray-900 mb-3">Class PPT</h4>
+                  <div className="space-y-4">
+                    <div>
+                      <label htmlFor="classPpt" className="block text-sm font-medium text-gray-700 mb-1">
+                        Upload Class PPT (PDF)
+                      </label>
+                      <input
+                        type="file"
+                        id="classPpt"
+                        accept=".pdf"
+                        onChange={handleClassPptUpload}
+                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                      />
+                    </div>
+                    {newResource.classPptFile && (
+                      <div className="mt-2">
+                        <p className="text-sm text-gray-500">PDF uploaded: {newResource.classPptTitle}</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
 
                 {/* Exercise Section */}
                 <div className="border rounded-lg p-4">
@@ -1500,7 +1522,7 @@ const SubjectEditor: React.FC = () => {
 
                 {/* Video Section */}
                 <div className="border rounded-lg p-4">
-                  <h4 className="font-medium text-gray-900 mb-3">Video</h4>
+                  <h4 className="font-medium text-gray-900 mb-3">Class Video</h4>
                   <div className="space-y-4">
                     <div>
                       <label htmlFor="videoLink" className="block text-sm font-medium text-gray-700 mb-1">
@@ -1518,33 +1540,11 @@ const SubjectEditor: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Class PPT */}
-                <div className="border rounded-lg p-4">
-                  <h4 className="font-medium text-gray-900 mb-3">Class PPT</h4>
-                  <div className="space-y-4">
-                    <div>
-                      <label htmlFor="classPpt" className="block text-sm font-medium text-gray-700 mb-1">
-                        Upload Class PPT (PDF)
-                      </label>
-                      <input
-                        type="file"
-                        id="classPpt"
-                        accept=".pdf"
-                        onChange={handleClassPptUpload}
-                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                      />
-                    </div>
-                    {newResource.classPptFile && (
-                      <div className="mt-2">
-                        <p className="text-sm text-gray-500">PDF uploaded: {newResource.classPptTitle}</p>
-                      </div>
-                    )}
-                  </div>
-                </div>
+                
 
-                {/* Article Section */}
+                {/* Test Section */}
                 <div className="border rounded-lg p-4">
-                  <h4 className="font-medium text-gray-900 mb-3">Resources</h4>
+                  <h4 className="font-medium text-gray-900 mb-3">Test</h4>
                   <div className="space-y-4">
                     
                     <div>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 interface StudentProfile {
@@ -19,6 +20,7 @@ interface StudentProfile {
 }
 
 const StudentProfile: React.FC = () => {
+  const navigate = useNavigate();
   const [profile, setProfile] = useState<StudentProfile | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -55,6 +57,13 @@ const StudentProfile: React.FC = () => {
     fetchStudentProfile();
   }, []);
 
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    toast.success('Logged out successfully');
+    navigate('/auth/login');
+  };
+
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-[400px]">
@@ -72,79 +81,58 @@ const StudentProfile: React.FC = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      <div className="bg-white shadow-lg rounded-2xl overflow-hidden">
-        {/* Profile Header */}
-        <div className="bg-gradient-to-r from-purple-600 to-purple-400 px-6 py-8">
-          <div className="flex items-center space-x-4">
-            <div className="h-20 w-20 rounded-full bg-white flex items-center justify-center text-2xl font-bold text-purple-600">
-              {profile.name.charAt(0).toUpperCase()}
-            </div>
-            <div className="text-white">
-              <h1 className="text-2xl font-bold">{profile.name}</h1>
-              <p className="text-purple-100">Student</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Profile Content */}
-        <div className="px-6 py-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Contact Information Section */}
-            <div className="space-y-6">
-              <h2 className="text-lg font-semibold text-gray-900 border-b border-gray-200 pb-2">
-                Contact Information
-              </h2>
-              
-              <div className="space-y-4">
-                <div className="bg-gray-50 rounded-lg p-4">
-                  <label className="block text-sm font-medium text-purple-600">Email</label>
-                  <p className="mt-1 text-gray-900">{profile.email}</p>
-                </div>
-
-                <div className="bg-gray-50 rounded-lg p-4">
-                  <label className="block text-sm font-medium text-purple-600">Phone Number</label>
-                  <p className="mt-1 text-gray-900">{profile.phone}</p>
+    <div className="min-h-screen bg-gray-50 py-8">
+      <div className="max-w-6xl mx-auto px-4">
+        <div className="bg-white rounded-xl shadow-sm overflow-hidden">
+          {/* Profile Header with Gradient */}
+          <div className="h-48 bg-gradient-to-r from-purple-600 to-purple-800 relative">
+            <div className="absolute bottom-0 left-0 right-0 px-8 pb-8 flex justify-between items-end">
+              <div className="flex items-end">
+                <div className="ml-6 mb-2">
+                  <h1 className="text-2xl font-bold text-white">{profile?.name}</h1>
+                  <p className="text-purple-100">Student</p>
                 </div>
               </div>
-            </div>
-
-            {/* Personal Information Section */}
-            <div className="space-y-6">
-              <h2 className="text-lg font-semibold text-gray-900 border-b border-gray-200 pb-2">
-                Personal Information
-              </h2>
-              
-              <div className="space-y-4">
-                <div className="bg-gray-50 rounded-lg p-4">
-                  <label className="block text-sm font-medium text-purple-600">Gender</label>
-                  <p className="mt-1 text-gray-900">
-                    {profile.gender.charAt(0) + profile.gender.slice(1).toLowerCase()}
-                  </p>
-                </div>
-
-                <div className="bg-gray-50 rounded-lg p-4">
-                  <label className="block text-sm font-medium text-purple-600">Batch</label>
-                  <p className="mt-1 text-gray-900">{profile.batch?.name || 'Not assigned'}</p>
-                </div>
-
-                
-              </div>
+              <button 
+                onClick={handleLogout}
+                className="text-white hover:text-purple-200 transition-colors"
+              >
+                Logout
+              </button>
             </div>
           </div>
 
-          {/* Additional Information Card */}
-          <div className="mt-8 bg-purple-50 rounded-xl p-6">
-            <div className="flex items-center justify-between">
+          {/* Profile Content */}
+          <div className="p-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* Contact Information */}
               <div>
-                <h3 className="text-lg font-medium text-purple-900">Current Batch</h3>
-                <p className="text-purple-600">{profile.batch?.name || 'Not assigned'}</p>
+                <h2 className="text-xl font-semibold mb-4">Contact Information</h2>
+                <div className="space-y-4">
+                  <div className="p-4 bg-gray-50 rounded-lg">
+                    <p className="text-sm text-gray-500">Email</p>
+                    <p className="font-medium">{profile?.email}</p>
+                  </div>
+                  <div className="p-4 bg-gray-50 rounded-lg">
+                    <p className="text-sm text-gray-500">Phone</p>
+                    <p className="font-medium">{profile?.phone || 'Not provided'}</p>
+                  </div>
+                </div>
               </div>
-              <div className="h-12 w-12 rounded-full bg-purple-100 flex items-center justify-center">
-                <svg className="h-6 w-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4" />
-                </svg>
+
+              {/* Academic Information */}
+              <div>
+                <h2 className="text-xl font-semibold mb-4">Academic Information</h2>
+                <div className="space-y-4">
+                  <div className="p-4 bg-gray-50 rounded-lg">
+                    <p className="text-sm text-gray-500">Registration Number</p>
+                    <p className="font-medium">{profile?.registrationNumber}</p>
+                  </div>
+                  <div className="p-4 bg-gray-50 rounded-lg">
+                    <p className="text-sm text-gray-500">Batch</p>
+                    <p className="font-medium">{profile?.batch?.name || 'Not assigned'}</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

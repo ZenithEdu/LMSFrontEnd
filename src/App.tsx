@@ -23,8 +23,10 @@ import SubjectManagement from './pages/manager/SubjectManagement';
 import ProgressTracking from './pages/manager/ProgressTracking';
 import StudentDashboard from './pages/student/Dashboard';
 import TopicExplorer from './pages/student/TopicExplorer';
-import StudentProfile from './pages/student/StudentProfile'; // Add this import
 import SubjectResources from './pages/student/SubjectResources';
+import AdminProfile from './pages/admin/AdminProfile';
+import ManagerProfile from './pages/manager/ManagerProfile';
+import StudentProfile from './pages/student/StudentProfile';
 
 import { RequireAuth } from './components/guards/RequireAuth';
 
@@ -50,6 +52,7 @@ function App() {
             }
           >
             <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/admin/profile" element={<AdminProfile />} />
             <Route path="/admin/batch/create" element={<BatchCreation />} />
             <Route path="/admin/batch/manage" element={<BatchManagement />} />
             <Route path="/admin/users" element={<UserManagement />} />
@@ -65,6 +68,7 @@ function App() {
             }
           >
             <Route path="/manager" element={<ManagerDashboard />} />
+            <Route path="/manager/profile" element={<ManagerProfile />} />
             <Route path="/manager/batch/:batchId" element={<SubjectManagement />} />
             <Route path="/manager/progress" element={<ProgressTracking />} />
           </Route>
@@ -78,8 +82,8 @@ function App() {
             }
           >
             <Route path="/student" element={<StudentDashboard />} />
+            <Route path="/student/profile" element={<StudentProfile />} />
             <Route path="/student/subject/:subjectId" element={<SubjectResources />} />
-            <Route path="/student/profile" element={<StudentProfile />} /> {/* Changed from Profile to StudentProfile */}
           </Route>
 
           {/* Redirect to login if not authenticated */}

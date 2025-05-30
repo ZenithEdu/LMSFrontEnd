@@ -37,11 +37,11 @@ const Header: React.FC<HeaderProps> = ({ userName, userRole }) => {
   const getProfilePath = () => {
     switch (userRole) {
       case 'admin':
-        return '/admin/AdminProfile';
+        return '/admin/profile';
       case 'manager':
         return '/manager/profile';
       case 'student':
-        return '/student/profile';  // This will now link to StudentProfile component
+        return '/student/profile';
       default:
         return '/';
     }

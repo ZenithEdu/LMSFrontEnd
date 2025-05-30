@@ -47,7 +47,7 @@ const ManagerProfilePage: React.FC = () => {
           <div className="h-48 bg-gradient-to-r from-green-600 to-green-800 relative">
             <div className="absolute bottom-0 left-0 right-0 px-8 pb-8 flex justify-between items-end">
               <div className="flex items-end">
-                <div className="ml-6 mb-2" onClick={handleLogout}>
+                <div className="ml-6 mb-2">
                   <h1 className="text-2xl font-bold text-white">{profile.name}</h1>
                   <p className="text-green-100 flex items-center">
                     <Shield size={14} className="mr-1" />
@@ -55,6 +55,12 @@ const ManagerProfilePage: React.FC = () => {
                   </p>
                 </div>
               </div>
+              <button 
+                onClick={handleLogout}
+                className="text-white hover:text-green-200 transition-colors"
+              >
+                Logout
+              </button>
             </div>
           </div>
 
