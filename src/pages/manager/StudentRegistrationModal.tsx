@@ -9,10 +9,9 @@ interface StudentRegistrationModalProps {
 
 const StudentRegistrationModal: React.FC<StudentRegistrationModalProps> = ({ isOpen, onClose, batches }) => {
   const [formData, setFormData] = useState({
+    uniId: '',
     name: '',
     email: '',
-    phone: '',
-    gender: 'MALE',
     batchId: '',
     branch: '',
   });
@@ -24,7 +23,7 @@ const StudentRegistrationModal: React.FC<StudentRegistrationModalProps> = ({ isO
       const requestBody = {
         type: "STUDENT",
         ...formData,
-        role: 'STUDENT'
+        role: 'ADMIN'
       };
 
       await axios.post(
@@ -53,6 +52,16 @@ const StudentRegistrationModal: React.FC<StudentRegistrationModalProps> = ({ isO
         <h2 className="text-xl font-bold mb-4">Register New Student</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
+            <label className="block text-sm font-medium mb-1">University ID</label>
+            <input
+              type="text"
+              required
+              className="w-full border rounded-md p-2"
+              value={formData.uniId}
+              onChange={(e) => setFormData({...formData, uniId: e.target.value})}
+            />
+          </div>
+          <div>
             <label className="block text-sm font-medium mb-1">Name</label>
             <input
               type="text"
@@ -73,26 +82,14 @@ const StudentRegistrationModal: React.FC<StudentRegistrationModalProps> = ({ isO
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">Phone</label>
+            <label className="block text-sm font-medium mb-1">Branch</label>
             <input
-              type="tel"
+              type="text"
               required
-              pattern="[0-9]{10}"
               className="w-full border rounded-md p-2"
-              value={formData.phone}
-              onChange={(e) => setFormData({...formData, phone: e.target.value})}
+              value={formData.branch}
+              onChange={(e) => setFormData({...formData, branch: e.target.value})}
             />
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-1">Gender</label>
-            <select
-              className="w-full border rounded-md p-2"
-              value={formData.gender}
-              onChange={(e) => setFormData({...formData, gender: e.target.value})}
-            >
-              <option value="MALE">Male</option>
-              <option value="FEMALE">Female</option>
-            </select>
           </div>
           <div>
             <label className="block text-sm font-medium mb-1">Batch</label>
@@ -109,16 +106,6 @@ const StudentRegistrationModal: React.FC<StudentRegistrationModalProps> = ({ isO
                 </option>
               ))}
             </select>
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-1">Branch</label>
-            <input
-              type="text"
-              required
-              className="w-full border rounded-md p-2"
-              value={formData.branch}
-              onChange={(e) => setFormData({...formData, branch: e.target.value})}
-            />
           </div>
           <div className="flex justify-end space-x-2 mt-4">
             <button
