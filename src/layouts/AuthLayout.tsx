@@ -10,7 +10,7 @@ const AuthLayout: React.FC = () => {
         <div className="absolute inset-0 bg-[url('https://images.pexels.com/photos/2041540/pexels-photo-2041540.jpeg')] bg-cover bg-center opacity-20"></div>
         <div className="relative z-10 max-w-md text-center">
           <GraduationCap className="h-20 w-20 text-white mx-auto mb-6" />
-          <h1 className="text-4xl font-bold text-white mb-6"> ZEN-LMS</h1>
+          <h1 className="text-4xl font-bold text-white mb-6">Zen-LMS</h1>
           <p className="text-white text-xl opacity-90 mb-8">
             Empowering educational institutions with smart technology to manage learning resources effectively.
           </p>

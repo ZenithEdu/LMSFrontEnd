@@ -59,7 +59,7 @@ const Login: React.FC = () => {
       <div className="text-center mb-8">
         <h2 className="text-3xl font-bold text-gray-900">Sign in to your account</h2>
         <p className="mt-2 text-gray-600">
-          Access your  ZEN-LMS dashboard
+          Access your  Zen-LMS dashboard
         </p>
       </div>
 

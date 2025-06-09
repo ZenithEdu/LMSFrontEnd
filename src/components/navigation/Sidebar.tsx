@@ -83,7 +83,7 @@ const Sidebar: React.FC<SidebarProps> = ({ userRole }) => {
       <div className={`flex items-center ${collapsed ? 'justify-center' : 'px-6'} h-16`}>
         <GraduationCap className="text-white h-8 w-8" />
         {!collapsed && (
-          <span className="ml-2 text-xl font-semibold text-white">Mini-LMS</span>
+          <span className="ml-2 text-xl font-semibold text-white">Zen-LMS</span>
         )}
       </div>
 
