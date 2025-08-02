@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Trash2, Eye, Calendar, Users, Clock, ArrowUpRight, BookOpen, Loader, Search, Filter, ChevronDown, RotateCw } from 'lucide-react';
 import axios from 'axios';
+import config from '../../config';
 
 interface Batch {
   id: string;
@@ -69,7 +70,7 @@ const BatchManagement: React.FC = () => {
           throw new Error('No authentication token found');
         }
 
-        const response = await fetch('https://lmsbackend-3l0h.onrender.com/api/batches', {
+        const response = await fetch(`${config.API_BASE_URL}/batches`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
@@ -155,7 +156,7 @@ const BatchManagement: React.FC = () => {
         throw new Error('No authentication token found');
       }
 
-      const response = await fetch(`https://lmsbackend-3l0h.onrender.com/api/batches/${batchId}`, {
+      const response = await fetch(`${config.API_BASE_URL}/batches/${batchId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -182,7 +183,7 @@ const BatchManagement: React.FC = () => {
         throw new Error('No authentication token found');
       }
 
-      const response = await fetch(`https://lmsbackend-3l0h.onrender.com/api/batches/${batchId}`, {
+      const response = await fetch(`${config.API_BASE_URL}/batches/${batchId}`, {
         method: 'PATCH',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -225,7 +226,7 @@ const BatchManagement: React.FC = () => {
       }
 
       await axios.post(
-        'https://lmsbackend-3l0h.onrender.com/api/batches/trigger-cleanup',
+        `${config.API_BASE_URL}/batches/trigger-cleanup`,
         {},
         {
           headers: {
@@ -236,7 +237,7 @@ const BatchManagement: React.FC = () => {
 
       // Fetch updated batch list after cleanup
       const response = await axios.get(
-        'https://lmsbackend-3l0h.onrender.com/api/batches',
+        `${config.API_BASE_URL}/batches`,
         {
           headers: {
             'Authorization': `Bearer ${token}`

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import config from '../../config';
 import { Search, Filter, ChevronDown, UserPlus, Trash2, PenSquare } from 'lucide-react';
 import { toast } from 'react-toastify';
 import {
@@ -47,7 +48,7 @@ const UserManagement: React.FC = () => {
   // Add new fetch function
   const fetchEmployees = async () => {
     try {
-      const response = await axios.get('https://lmsbackend-3l0h.onrender.com/api/admin/allEmployee', {
+      const response = await axios.get(`${config.API_BASE_URL}/admin/allEmployee`, {
         headers: {
           Authorization: `Bearer ${getAccessToken()}`
         }
@@ -86,7 +87,7 @@ const UserManagement: React.FC = () => {
   // Handle employee deletion
   const handleDeleteEmployee = async (employeeId: string) => {
     try {
-      await axios.delete(`https://lmsbackend-3l0h.onrender.com/api/admin/deleteEmployee/${employeeId}`, {
+      await axios.delete(`${config.API_BASE_URL}/admin/deleteEmployee/${employeeId}`, {
         headers: {
           Authorization: `Bearer ${getAccessToken()}`,
         },
@@ -161,7 +162,7 @@ const UserManagement: React.FC = () => {
         });
 
         const response = await axios.post(
-          'https://lmsbackend-3l0h.onrender.com/api/auth/register/employee',
+          `${config.API_BASE_URL}/auth/register/employee`,
           payload,
           {
             headers: {

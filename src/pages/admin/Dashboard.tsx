@@ -3,6 +3,7 @@ import { Users, Layers, BookOpen, ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { loadBatchesFromStorage, loadSubjectsFromStorage } from '../../utils/storage';
 import axios from 'axios';
+import config from '../../config';
 
 export interface Batch {
   id: string;
@@ -49,13 +50,13 @@ function AdminDashboard() {
         const token = localStorage.getItem('token');
         
         const [batchCountResponse, studentCountResponse, subjectCountResponse] = await Promise.all([
-          axios.get('https://lmsbackend-3l0h.onrender.com/api/admin/batchCount', {
+          axios.get(`${config.API_BASE_URL}/admin/batchCount`, {
             headers: { 'Authorization': `Bearer ${token}` }
           }),
-          axios.get('https://lmsbackend-3l0h.onrender.com/api/admin/studentCount', {
+          axios.get(`${config.API_BASE_URL}/admin/studentCount`, {
             headers: { 'Authorization': `Bearer ${token}` }
           }),
-          axios.get('https://lmsbackend-3l0h.onrender.com/api/admin/subjectCount', {
+          axios.get(`${config.API_BASE_URL}/admin/subjectCount`, {
             headers: { 'Authorization': `Bearer ${token}` }
           })
         ]);

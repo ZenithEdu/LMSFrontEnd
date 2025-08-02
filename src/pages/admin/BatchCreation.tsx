@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import * as XLSX from 'xlsx';
 import axios from 'axios';
+import config from '../../config';
 
 interface Manager {
   id: string;
@@ -76,7 +77,7 @@ const BatchCreation: React.FC = () => {
   useEffect(() => {
     const fetchManagers = async () => {
       try {
-        const response = await axios.get('https://lmsbackend-3l0h.onrender.com/api/admin/allEmployee', {
+        const response = await axios.get(`${config.API_BASE_URL}/admin/allEmployee`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token') || ''}`
           }
@@ -104,7 +105,7 @@ const BatchCreation: React.FC = () => {
   useEffect(() => {
     const fetchSubjects = async () => {
       try {
-        const response = await axios.get('https://lmsbackend-3l0h.onrender.com/api/content/subject', {
+        const response = await axios.get(`${config.API_BASE_URL}/content/subject`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token') || ''}`
           }
@@ -215,7 +216,7 @@ const BatchCreation: React.FC = () => {
       }
 
       const response = await axios.post(
-        'https://lmsbackend-3l0h.onrender.com/api/batches',
+        `${config.API_BASE_URL}/batches`,
         formData,
         {
           headers: {

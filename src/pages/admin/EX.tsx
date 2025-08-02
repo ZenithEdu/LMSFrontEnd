@@ -334,7 +334,7 @@ interface ResourceResponse {
 const fetchResources = async (subjectId: string) => {
   try {
     const response = await axios.get(
-      `https://lmsbackend-3l0h.onrender.com/api/content/subject/${subjectId}/topic`,
+      `${config.API_BASE_URL}/content/subject/${subjectId}/topic`,
       {
         headers: {
           Authorization: `Bearer ${getAccessToken()}`
@@ -374,7 +374,7 @@ const fetchResources = async (subjectId: string) => {
 
 const fetchSubjectById = async (id: string) => {
   try {
-    const response = await axios.get(`https://lmsbackend-3l0h.onrender.com/api/content/subject/${id}`, {
+    const response = await axios.get(`${config.API_BASE_URL}/content/subject/${id}`, {
       headers: {
         Authorization: `Bearer ${getAccessToken()}`
       }
@@ -390,7 +390,7 @@ const fetchSubjectById = async (id: string) => {
 const updateSubjectById = async (id: string, updatedData: Partial<Subject>) => {
   try {
     const response = await axios.put(
-      `https://lmsbackend-3l0h.onrender.com/api/content/subject/${id}`,
+      `${config.API_BASE_URL}/content/subject/${id}`,
       updatedData,
       {
         headers: {
@@ -410,7 +410,7 @@ const updateSubjectById = async (id: string, updatedData: Partial<Subject>) => {
 
 const deleteSubjectById = async (id: string) => {
   try {
-    await axios.delete(`https://lmsbackend-3l0h.onrender.com/api/content/subject/${id}`, {
+    await axios.delete(`${config.API_BASE_URL}/content/subject/${id}`, {
       headers: {
         Authorization: `Bearer ${getAccessToken()}`
       }
@@ -453,7 +453,7 @@ const createResource = async (subjectId: string, resourceData: Resource) => {
     }
 
     const response = await axios.post(
-      `https://lmsbackend-3l0h.onrender.com/api/content/subject/${subjectId}/topic`,
+      `${config.API_BASE_URL}/content/subject/${subjectId}/topic`,
       formData,
       {
         headers: {
@@ -501,7 +501,7 @@ const updateResource = async (subjectId: string, resourceId: string, updatedData
     }
 
     const response = await axios.put(
-      `https://lmsbackend-3l0h.onrender.com/api/content/subject/${subjectId}/topic/${resourceId}`,
+      `${config.API_BASE_URL}/content/subject/${subjectId}/topic/${resourceId}`,
       formData,
       {
         headers: {
@@ -522,7 +522,7 @@ const updateResource = async (subjectId: string, resourceId: string, updatedData
 const deleteResource = async (subjectId: string, resourceId: string) => {
   try {
     await axios.delete(
-      `https://lmsbackend-3l0h.onrender.com/api/content/subject/${subjectId}/topic/${resourceId}`,
+      `${config.API_BASE_URL}/content/subject/${subjectId}/topic/${resourceId}`,
       {
         headers: {
           Authorization: `Bearer ${getAccessToken()}`
@@ -599,7 +599,7 @@ const SubjectEditor: React.FC = () => {
   useEffect(() => {
     const fetchSubjectsAndTopics = async () => {
       try {
-        const response = await axios.get('https://lmsbackend-3l0h.onrender.com/api/content/subject', {
+        const response = await axios.get(`${config.API_BASE_URL}/content/subject`, {
           headers: {
             Authorization: `Bearer ${getAccessToken()}`
           }
@@ -688,7 +688,7 @@ const SubjectEditor: React.FC = () => {
       };
 
       const response = await axios.post(
-        'https://lmsbackend-3l0h.onrender.com/api/content/subject',
+        `${config.API_BASE_URL}/content/subject`,
         newSubjectData,
         {
           headers: {

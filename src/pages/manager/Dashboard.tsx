@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import config from '../../config';
 import { Link } from 'react-router-dom';
 import { Calendar, Users, Clock, ArrowUpRight, BookOpen, Loader } from 'lucide-react';
 import StudentRegistrationModal from './StudentRegistrationModal';
@@ -33,7 +34,7 @@ const ManagerDashboard: React.FC = () => {
         const managerId = user.id; // Use id from user object
 
         const response = await axios.get(
-          `https://lmsbackend-3l0h.onrender.com/api/batches/manager/${managerId}`,
+          `${config.API_BASE_URL}/batches/manager/${managerId}`,
           {
             headers: {
               'Authorization': `Bearer ${token}`
@@ -121,7 +122,7 @@ const ManagerDashboard: React.FC = () => {
                       const token = localStorage.getItem('token');
                       // Fetch batch data
                       const batchResponse = await axios.get(
-                        `https://lmsbackend-3l0h.onrender.com/api/batches/${batch.batchId}`,
+                        `${config.API_BASE_URL}/batches/${batch.batchId}`,
                         {
                           headers: {
                             'Authorization': `Bearer ${token}`
@@ -138,7 +139,7 @@ const ManagerDashboard: React.FC = () => {
                       // Fetch topics for each subject
                       for (const subjectId of subjectIds) {
                         const topicsResponse = await axios.get(
-                          `https://lmsbackend-3l0h.onrender.com/api/content/subject/${subjectId}/topic`,
+                          `${config.API_BASE_URL}/content/subject/${subjectId}/topic`,
                           {
                             headers: {
                               'Authorization': `Bearer ${token}`

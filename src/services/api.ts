@@ -69,7 +69,7 @@ export const loginApi = async (email: string, password: string) => {
 
 export const verifyEmail = async (email: string) => {
   try {
-    const response = await axios.post('https://lmsbackend-3l0h.onrender.com/api/auth/reset/verify-email', {
+    const response = await axios.post(`${config.API_BASE_URL}/auth/reset/verify-email`, {
       email
     });
     return response.data;
@@ -80,7 +80,7 @@ export const verifyEmail = async (email: string) => {
 
 export const forgotPasswordApi = async (email: string) => {
   try {
-    const response = await axios.post('https://lmsbackend-3l0h.onrender.com/api/auth/reset/forgot-password', {
+    const response = await axios.post(`${config.API_BASE_URL}/auth/reset/forgot-password`, {
       email
     });
     return response.data;
@@ -91,7 +91,7 @@ export const forgotPasswordApi = async (email: string) => {
 
 export const logoutApi = async () => {
   try {
-    await axios.post('https://lmsbackend-3l0h.onrender.com/api/auth/logout', {}, {
+    await axios.post(`${config.API_BASE_URL}/auth/logout`, {}, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
@@ -112,7 +112,7 @@ export const refreshTokenApi = async () => {
       throw new Error('No refresh token available');
     }
 
-    const response = await axios.post('https://lmsbackend-3l0h.onrender.com/api/auth/refresh-token', {
+    const response = await axios.post(`${config.API_BASE_URL}/auth/refresh-token`, {
       refreshToken
     });
 

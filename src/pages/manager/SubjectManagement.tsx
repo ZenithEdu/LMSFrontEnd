@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { BookOpen, ChevronDown, ChevronRight, FileText, Video, ExternalLink, Edit2, Trash2 } from 'lucide-react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import config from '../../config';
 
 interface Subject {
   id: string;
@@ -154,7 +155,7 @@ const SubjectManagement: React.FC = () => {
 
           // Get subject details
           const subjectResponse = await axios.get(
-            `https://lmsbackend-3l0h.onrender.com/api/content/subject/${subjectId}`,
+            `${config.API_BASE_URL}/content/subject/${subjectId}`,
             {
               headers: { 'Authorization': `Bearer ${token}` }
             }
@@ -162,7 +163,7 @@ const SubjectManagement: React.FC = () => {
 
           // Get topics for this subject
           const topicsResponse = await axios.get(
-            `https://lmsbackend-3l0h.onrender.com/api/content/subject/${subjectId}/topic`,
+            `${config.API_BASE_URL}/content/subject/${subjectId}/topic`,
             {
               headers: { 'Authorization': `Bearer ${token}` }
             }
@@ -308,7 +309,7 @@ const SubjectManagement: React.FC = () => {
 
       // Make API call
       await axios.patch(
-        `https://lmsbackend-3l0h.onrender.com/api/batches/${currentBatch.id}/subjects/${resource.subtopicId}/selections`,
+        `${config.API_BASE_URL}/batches/${currentBatch.id}/subjects/${resource.subtopicId}/selections`,
         payload,
         {
           headers: {
@@ -348,13 +349,13 @@ const SubjectManagement: React.FC = () => {
       }, {});
 
       console.log('Bulk Update Payloads:', Object.entries(topicsBySubject).map(([subjectId, topics]) => ({
-        url: `https://lmsbackend-3l0h.onrender.com/api/batches/${currentBatch.id}/subjects/${subjectId}/selections`,
+        url: `${config.API_BASE_URL}/batches/${currentBatch.id}/subjects/${subjectId}/selections`,
         payload: { topicUpdates: topics }
       })));
 
       const updatePromises = Object.entries(topicsBySubject).map(([subjectId, topics]) =>
         axios.patch(
-          `https://lmsbackend-3l0h.onrender.com/api/batches/${currentBatch.id}/subjects/${subjectId}/selections`,
+          `${config.API_BASE_URL}/batches/${currentBatch.id}/subjects/${subjectId}/selections`,
           { topicUpdates: topics },
           {
             headers: {
@@ -397,12 +398,12 @@ const SubjectManagement: React.FC = () => {
       };
 
       console.log('Subject Update Payload:', {
-        url: `https://lmsbackend-3l0h.onrender.com/api/batches/${currentBatch.id}/subjects/${subjectId}/selections`,
+        url: `${config.API_BASE_URL}/batches/${currentBatch.id}/subjects/${subjectId}/selections`,
         payload
       });
 
       await axios.patch(
-        `https://lmsbackend-3l0h.onrender.com/api/batches/${currentBatch.id}/subjects/${subjectId}/selections`,
+        `${config.API_BASE_URL}/batches/${currentBatch.id}/subjects/${subjectId}/selections`,
         payload,
         {
           headers: {
