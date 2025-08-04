@@ -5,7 +5,7 @@ interface Config {
 }
 
 const config: Config = {
-  API_BASE_URL: import.meta.env.VITE_API_BASE_URL || 'https://lmsbackend-3l0h.onrender.com/api',
+  API_BASE_URL: import.meta.env.VITE_API_BASE_URL || 'https://api.zenlms.online/api',
   JWT_SECRET_KEY: import.meta.env.VITE_JWT_SECRET_KEY || '',
   ACCESS_TOKEN_EXPIRY: Number(import.meta.env.VITE_ACCESS_TOKEN_EXPIRY || '3600'),
 };

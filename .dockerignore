@@ -3,7 +3,6 @@ dist
 .git
 .gitignore
 Dockerfile
-DockerFile
 docker-compose.yml
 .env
 .env.example
