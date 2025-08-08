@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import config from '../../config';
 
 interface StudentProfile {
   id: string;
@@ -35,7 +36,7 @@ const StudentProfile: React.FC = () => {
         }
 
         const response = await axios.get(
-          `https://lmsbackend-3l0h.onrender.com/api/student/${user.id}`,
+          `${config.API_BASE_URL}/student/${user.id}`,
           {
             headers: {
               'Authorization': `Bearer ${token}`

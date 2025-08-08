@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { Mail, AlertCircle } from 'lucide-react';
+import config from '../../config';
 
 const ForgotPassword: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -10,7 +11,7 @@ const ForgotPassword: React.FC = () => {
 
   const verifyEmail = async (email: string) => {
     try {
-      const response = await axios.post('https://lmsbackend-3l0h.onrender.com/api/auth/reset/verify-email', {
+      const response = await axios.post(`${config.API_BASE_URL}/auth/reset/verify-email`, {
         email
       });
       return response.data;
@@ -18,17 +19,6 @@ const ForgotPassword: React.FC = () => {
       throw new Error(error.response?.data?.message || 'Email verification failed');
     }
   };
-
-  // const sendResetPasswordLink = async (email: string) => {
-  //   try {
-  //     const response = await axios.post('https://lmsbackend-3l0h.onrender.com/api/auth/reset/forgot-password', {
-  //       email
-  //     });
-  //     return response.data;
-  //   } catch (error: any) {
-  //     throw new Error(error.response?.data?.message || 'Failed to send reset link');
-  //   }
-  // };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import config from '../../config';
 
 interface StudentRegistrationModalProps {
   isOpen: boolean;
@@ -27,7 +28,7 @@ const StudentRegistrationModal: React.FC<StudentRegistrationModalProps> = ({ isO
       };
 
       await axios.post(
-        'https://lmsbackend-3l0h.onrender.com/api/auth/register/student',
+        `${config.API_BASE_URL}/auth/register/student`,
         requestBody,
         {
           headers: {

@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Lock } from 'lucide-react';
 import axios from 'axios';
+import config from '../../config';
 
 interface ResetPasswordPayload {
   token: string;
@@ -47,7 +48,7 @@ const ResetPassword: React.FC = () => {
 
     try {
       await axios.post(
-        'https://lmsbackend-3l0h.onrender.com/api/auth/reset/forgot-password',
+        `${config.API_BASE_URL}/auth/reset/forgot-password`,
         {
           token: formData.token,
           newPassword: formData.newPassword,

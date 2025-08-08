@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { BookOpen, Filter, ChevronDown, FileText, Video, ExternalLink } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import axios from 'axios';
+import config from '../../config';
 
 interface Subject {
   subjectId: string;
@@ -98,7 +99,7 @@ const StudentDashboard: React.FC = () => {
 
         // Get student profile to get batchId
         const profileResponse = await axios.get(
-          `https://lmsbackend-3l0h.onrender.com/api/student/${user.id}`,
+          `${config.API_BASE_URL}/student/${user.id}`,
           {
             headers: { 'Authorization': `Bearer ${token}` }
           }
@@ -108,7 +109,7 @@ const StudentDashboard: React.FC = () => {
 
         // Fetch curriculum using batchId
         const curriculumResponse = await axios.get(
-          `https://lmsbackend-3l0h.onrender.com/api/batches/${batchId}/curriculum`,
+          `${config.API_BASE_URL}/batches/${batchId}/curriculum`,
           {
             headers: { 'Authorization': `Bearer ${token}` }
           }

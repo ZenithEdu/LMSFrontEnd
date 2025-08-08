@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Lock } from 'lucide-react';
 import axios from 'axios';
+import config from '../../config';
 
 interface CreatePasswordPayload {
   token: string;
@@ -37,7 +38,7 @@ const CreatePassword: React.FC = () => {
 
     try {
       await axios.post(
-        'https://lmsbackend-3l0h.onrender.com/api/auth/reset/first-time',
+        `${config.API_BASE_URL}/auth/reset/first-time`,
         formData
       );
 
